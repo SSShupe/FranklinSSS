@@ -7,7 +7,27 @@ The website_* must be defined for the RSS to work
 @def website_url   = "https://alt.ssshupe.com"
 
 @def author = "Steven Shupe"
+
+<!--
+Supported frontmatter variables for blog posts (set these in the +++ block):
+
+  title           = "Post Title"          # page title and og:title
+  date            = Date(YYYY, MM, DD)    # publication date
+  featured_image  = "https://..."         # cover image (local /assets/file.jpg or full URL)
+                                          #   used in: post card, og:image, page header
+  description     = "One sentence summary" # used in: og:description (social share cards)
+                                           # if omitted, falls back to site description
+
+Example post frontmatter:
+  +++
+  title = "My Post"
+  date = Date(2026, 5, 1)
+  featured_image = "/assets/my-photo.jpg"
+  description = "A short summary for social sharing."
+  +++
+-->
 @def featured_image = ""
+@def description = ""
 
 @def mintoclevel = 2
 

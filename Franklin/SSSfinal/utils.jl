@@ -1,53 +1,69 @@
 using Dates
 using HTTP
 using XMLDict
+using StatsBase
 
 """
     {{blogposts}}
 
-Plug in the list of blog posts contained in the `/blog/` folder.
+Plug in the list of blog posts as styled cards with cover image, excerpt, and reading time.
 """
 @delay function hfun_blogposts()
-    today = Dates.today()
-    curyear = year(today)
-    curmonth = month(today)
-    curday = day(today)
-
     list = readdir("blog")
-    filter!(x -> !startswith(x, "index"), list)
-    sorter(p) = begin
-        ps = splitext(p)[1]
-        url = "/blog/$ps/"
-        surl = strip(url, '/')
-        pubdate = pagevar(surl, :date)
-        if isnothing(pubdate)
-            return Date(Dates.unix2datetime(stat(surl * ".md").ctime))
-        end
-        return Date(pubdate, dateformat"d U Y")
-    end
-    sort!(list, by=sorter, rev=true)
+    filter!(f -> endswith(f, ".md") && !startswith(f, "index"), list)
+    sort!(list, rev=true)  # YYYY-MM-DD filenames sort correctly in reverse
 
     io = IOBuffer()
-    write(io, """<ul class="blog-posts">""")
-    for (i, post) in enumerate(list)
-        if post == "index.md"
-            continue
-        end
+    write(io, """<div class="post-cards">""")
+    for post in list
         ps = splitext(post)[1]
-        write(io, "<li><span><i>")
         url = "/blog/$ps/"
         surl = strip(url, '/')
+
         title = pagevar(surl, :title)
-        pubdate = pagevar(surl, :date)
-        if isnothing(pubdate)
-            date = "$curyear-$curmonth-$curday"
-        else
-            date = Date(pubdate, dateformat"d U Y")
+        isnothing(title) && (title = ps)
+
+        date_formatted = try
+            Dates.format(Date(ps[1:10], DateFormat("y-m-d")), "U d, Y")
+        catch
+            ps[1:10]
         end
-        write(io, """$date</i></span><a href="$url">$title</a>""")
+
+        cover = pagevar(surl, :featured_image)
+        has_cover = cover isa String && !isempty(cover)
+
+        text = extract_plain_text(joinpath("blog", post))
+        words = split(text)
+        nwords = length(words)
+        read_time = max(1, round(Int, nwords / 200))
+        excerpt = join(words[1:min(40, nwords)], " ")
+        nwords > 40 && (excerpt *= "…")
+
+        write(io, """<article class="post-card">""")
+        write(io, """<div class="post-card-body">""")
+        write(io, """<h2 class="post-card-title"><a href="$url">$title</a></h2>""")
+        write(io, """<p class="post-card-meta">$date_formatted · $read_time min read</p>""")
+        if has_cover
+            write(io, """<a href="$url" class="post-card-image-link"><img src="$cover" alt="$title" class="post-card-image"></a>""")
+        end
+        write(io, """<p class="post-card-excerpt">$excerpt</p>""")
+        write(io, """</div></article>""")
     end
-    write(io, "</ul>")
+    write(io, "</div>")
     return String(take!(io))
+end
+
+function extract_plain_text(filepath)
+    content = read(filepath, String)
+    content = replace(content, r"^\+\+\+.*?\+\+\+"s => "")   # frontmatter
+    content = replace(content, r"~~~.*?~~~"s => "")            # raw HTML blocks
+    content = replace(content, r"_Posted\s+\{\{[^}]+\}\}_" => "")  # "_Posted {{date}}_" boilerplate
+    content = replace(content, r"\{\{[^}]*\}\}" => "")        # Franklin directives
+    content = replace(content, r"\[([^\]]*)\]\([^)]*\)" => s"\1")  # [text](url) → text
+    content = replace(content, r"[*_`#>]+" => " ")            # markdown syntax
+    content = replace(content, r"<[^>]+>" => " ")             # any stray HTML tags
+    content = strip(replace(content, r"\s+" => " "))
+    return content
 end
 
 """
@@ -107,11 +123,11 @@ function hfun_try()
 end
 
 function hfun_photos()
-    call = HTTP.get("https://www.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&api_key=1a77359c736a2f7546c1797c832ff5cf&user_id=11155423%40N00&format=rest")
+    call = HTTP.get("https://www.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&api_key=1a77359c736a2f7546c1797c832ff5cf&user_id=11155423%40N00&per_page=500&format=rest")
     last100 = String(call.body) |> parse_xml
     ids = String[]
     titles = String[]
-    for i in 1:25
+    for i in sample(1:500, 25, replace=false)
         push!(ids, last100["photos"]["photo"][i][:id])
         push!(titles, last100["photos"]["photo"][i][:title])
     end

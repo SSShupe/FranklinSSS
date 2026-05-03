@@ -4,4 +4,4 @@
 <h1>Posts</h1>
 ~~~
 
-{{try}}
+{{blogposts}}

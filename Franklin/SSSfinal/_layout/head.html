@@ -30,33 +30,21 @@
       rel="stylesheet"
     />
     {{end}}
-    <!-- Facebook Meta Tags -->
-    <meta property="og:url" content="https://ssshupe.com" />
+    <!-- Open Graph Meta Tags (used by Facebook, Bluesky, etc.) -->
+    <meta property="og:url" content="https://alt.ssshupe.com{{fill fd_url}}" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="The New SSS Blog" />
-    <meta
-      property="og:description"
-      content="My new static site blog created with Franklin.jl and the Julia Programming Language"
-    />
+    <meta property="og:title" content="{{fill title}}" />
+    {{isnotempty description}}
+    <meta property="og:description" content="{{fill description}}" />
+    {{end}}
+    {{isempty description}}
+    <meta property="og:description" content="My new static site blog created with Franklin.jl and the Julia Programming Language" />
+    {{end}}
     {{isnotempty featured_image}}
     <meta property="og:image" content="{{fill featured_image}}" />
     {{end}}
     {{isempty featured_image}}
     <meta property="og:image" content="https://live.staticflickr.com/65535/52862419608_8d6eece333_k_d.jpg" />
-    {{end}}
-
-    <!-- Twitter Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="The New SSS Blog" />
-    <meta
-      name="twitter:description"
-      content="My new static site blog created with Franklin.jl and the Julia Programming Language"
-    />
-    {{isnotempty featured_image}}
-    <meta name="twitter:image" content="{{fill featured_image}}" />
-    {{end}}
-    {{isempty featured_image}}
-    <meta name="twitter:image" content="https://live.staticflickr.com/65535/52862419608_8d6eece333_k_d.jpg" />
     {{end}}
   </head>
   <body>
