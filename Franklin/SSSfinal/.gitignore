@@ -5,3 +5,5 @@ franklin.pub
 node_modules/
 .vscode/
 flickrapi.txt
+publish_to_wp.py
+.wp_published

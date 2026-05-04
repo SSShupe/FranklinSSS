@@ -1,0 +1,24 @@
+#!/bin/bash
+# Publish newly added Franklin blog posts to WordPress after each commit.
+# Works on Linux and Windows (Git for Windows / Git Bash).
+
+SITE_BLOG="Franklin/SSSfinal/blog"
+REPO_ROOT=$(git rev-parse --show-toplevel)
+SCRIPT="$REPO_ROOT/Franklin/SSSfinal/publish_to_wp.py"
+
+# Use python3 if available, fall back to python (common on Windows)
+PYTHON=$(command -v python3 2>/dev/null || command -v python)
+
+# Find .md files added (not modified) in this commit, excluding index.md
+NEW_POSTS=$(git diff-tree --no-commit-id -r --name-status HEAD \
+  | awk '$1 == "A"' \
+  | grep "${SITE_BLOG}/.*\.md$" \
+  | grep -v "index\.md" \
+  | awk '{print $2}')
+
+[ -z "$NEW_POSTS" ] && exit 0
+
+echo "==> WordPress publisher"
+for rel_path in $NEW_POSTS; do
+    "$PYTHON" "$SCRIPT" "$REPO_ROOT/$rel_path"
+done
