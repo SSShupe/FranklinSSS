@@ -5,13 +5,12 @@ date = Date(2026, 04, 18)
 featured_image = "/assets/StanfordHosp.jpg"
 
 +++
+~~~
+<h2>{{fill title}}</h2>
+~~~
+_Posted {{date}}_
 
-{{ date }}
-
-I'm a Guinea Pig
-----------------
-
-![](/assets/StanfordHospNew.jpeg)
+{{featuredimage}}
 
 Early this year, the blood cancer I have had since 2018, which had been under control, returned. The cancer (called multiple myeloma) causes the bone marrow to over-produce cancerous plasma cells, which cause bone pain and damage, kidney damage, fatigue, frequent infections, and eventually death. Treatments can keep it at bay for extended periods of time, but the cancer eventually mutates. Later “lines” of immunotherapy-type treatments are less effective and have worse side effects.
 
