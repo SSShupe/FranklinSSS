@@ -1,6 +1,6 @@
-@def title="My Last 25 Photos on Flickr"
+@def title="25 Random Photos from my Last 500 Posted to Flickr"
 
 ~~~
-<h2>25 Random Photos from my Last 500 on <a href="https://flickr.com/photos/ssshupe">Flickr</a></h2>
+<h2>25 Random Photos from my Last 500 Posted to <a href="https://flickr.com/photos/ssshupe">Flickr</a></h2>
 ~~~
 {{photos}}

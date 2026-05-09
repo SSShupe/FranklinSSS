@@ -6,8 +6,19 @@ SITE_BLOG="Franklin/SSSfinal/blog"
 REPO_ROOT=$(git rev-parse --show-toplevel)
 SCRIPT="$REPO_ROOT/Franklin/SSSfinal/publish_to_wp.py"
 
-# Use python3 if available, fall back to python (common on Windows)
-PYTHON=$(command -v python3 2>/dev/null || command -v python)
+# Find a working Python 3 — on Windows the python3 name may be a non-functional
+# Microsoft Store stub even when a real Python exists under the plain `python` name.
+PYTHON=""
+for CANDIDATE in python3 python; do
+    if command -v "$CANDIDATE" >/dev/null 2>&1 && "$CANDIDATE" -c "" 2>/dev/null; then
+        PYTHON="$CANDIDATE"
+        break
+    fi
+done
+if [ -z "$PYTHON" ]; then
+    echo "Error: Python 3 not found — install Python and re-run setup_wp_hook.sh"
+    exit 1
+fi
 
 # Find .md files added (not modified) in this commit, excluding index.md
 NEW_POSTS=$(git diff-tree --no-commit-id -r --name-status HEAD \
