@@ -29,9 +29,6 @@ Plug in the list of blog posts as styled cards with cover image, excerpt, and re
             ps[1:10]
         end
 
-        cover = pagevar(surl, :featured_image)
-        has_cover = cover isa String && !isempty(cover)
-
         text = extract_plain_text(joinpath("blog", post))
         words = split(text)
         nwords = length(words)
@@ -43,9 +40,6 @@ Plug in the list of blog posts as styled cards with cover image, excerpt, and re
         write(io, """<div class="post-card-body">""")
         write(io, """<h2 class="post-card-title"><a href="$url">$title</a></h2>""")
         write(io, """<p class="post-card-meta">$date_formatted · $read_time min read</p>""")
-        if has_cover
-            write(io, """<a href="$url" class="post-card-image-link"><img src="$cover" alt="$title" class="post-card-image"></a>""")
-        end
         write(io, """<p class="post-card-excerpt">$excerpt</p>""")
         write(io, """</div></article>""")
     end
