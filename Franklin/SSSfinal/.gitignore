@@ -8,3 +8,5 @@ flickrapi.txt
 publish_to_wp.py
 .wp_published
 SSH_MDP.txt
+wp_publish.py
+post-test.md
