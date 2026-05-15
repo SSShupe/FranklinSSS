@@ -24,7 +24,7 @@ Plug in the list of blog posts as styled cards with cover image, excerpt, and re
         isnothing(title) && (title = ps)
 
         date_formatted = try
-            Dates.format(Date(ps[1:10], DateFormat("y-m-d")), "U d, Y")
+            Dates.format(Date(ps[1:10], DateFormat("y-m-d")), "E U d, Y")
         catch
             ps[1:10]
         end
@@ -108,7 +108,7 @@ end
 
 function hfun_date()
     d = locvar("date")
-    return Dates.format(d, "U d, Y")
+    return Dates.format(d, "E U d, Y")
 end
 
 function lx_imgcap(lxc, _)
