@@ -11,7 +11,7 @@ featured_image = "/assets/OilRevenue.jpg"
 
 _Posted {{date}}_
 
-_Edited Sunday, May 17, 2006_
+_Edited Sunday, May 17, 2026_
 
 This graphic appeared in today's New York Times, as part of an [article](https://www.nytimes.com/2026/05/16/business/energy-environment/iran-war-oil-countries-winners-losers.html) about who benefits from the Strait of Hormuz closure and who doesn't.
 
