@@ -97,7 +97,11 @@ function hfun_photos()
         r = HTTP.get(p)
         rs = String(r.body)
         prs = parse_xml(rs)
-        push!(large_urls, prs["sizes"]["size"][12][:source])
+        sizes = prs["sizes"]["size"]
+        idx = findfirst(s -> s[:label] == "Large", sizes)
+        isnothing(idx) && (idx = findfirst(s -> s[:label] == "Medium 640", sizes))
+        isnothing(idx) && (idx = 1)
+        push!(large_urls, sizes[idx][:source])
     end
     io = IOBuffer()
     for i in 1:25

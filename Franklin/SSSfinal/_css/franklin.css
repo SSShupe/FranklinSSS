@@ -27,6 +27,49 @@ a {
   /*color: #ff5e6c;*/
 }
 
+/* === HEADER PHOTO BACKGROUND — remove this block to revert === */
+header {
+  background-image: url('/assets/LRCorniche.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: contrast(1.15) saturate(1.15);
+  min-height: 220px;
+  padding: 2rem 1rem 1rem;
+  margin: -20px -20px 1rem -20px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+header h1 {
+  color: #ffffff;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+  margin: 0 0 0.5rem;
+}
+
+header .title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+header .title {
+  text-decoration: none;
+  border: 0;
+}
+
+header nav a {
+  color: #ffffff;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+header nav .social-media a {
+  color: #ffffff;
+}
+/* === END HEADER PHOTO BACKGROUND === */
+
 .title {
   text-decoration: none;
   border: 0;
