@@ -1,3 +1,7 @@
+html {
+  overflow-x: hidden;
+}
+
 body {
   font-family: 'Lora','Roboto', 'Lato', 'Lora', Verdana, sans-serif;
   font-weight: 500;
@@ -8,7 +12,6 @@ body {
   background-color: #fffff8;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  overflow-x: hidden;
   line-height: 1.5;
   color: #111111;
 }
