@@ -4,7 +4,7 @@ html {
 
 body {
   font-family: 'Lora','Roboto', 'Lato', 'Lora', Verdana, sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   margin: auto;
   padding: 20px;
   max-width: 720px;
@@ -26,9 +26,26 @@ h6 {
   font-family: 'Roboto';
 }
 
+h2:not(.post-card-title) {
+  padding-bottom: 0.2rem;
+}
+
+h2:not(.post-card-title)::after {
+  content: '';
+  display: block;
+  width: 2.5rem;
+  height: 2px;
+  background: #b34c1e;
+  margin-top: 0.25rem;
+}
+
 a {
-  color: #3273dc;
-  /*color: #ff5e6c;*/
+  color: #b34c1e;
+  transition: color 0.15s;
+}
+
+a:hover {
+  color: #7a2e0a;
 }
 
 /* === HEADER PHOTO BACKGROUND — remove this block to revert === */
@@ -127,10 +144,13 @@ pre code {
 }
 
 blockquote {
-  border-left: 1px solid #999;
-  color: #222;
-  padding-left: 20px;
+  border-left: 4px solid #b34c1e;
+  color: #333;
+  padding: 0.6rem 1.25rem;
+  background: rgba(179, 76, 30, 0.05);
+  border-radius: 0 3px 3px 0;
   font-style: italic;
+  margin: 1.25rem 0;
 }
 
 footer {
@@ -248,8 +268,14 @@ figcaption {
 }
 
 .post-card {
-  padding: 1.75rem 0;
+  padding: 1.75rem 0 1.75rem 1rem;
   border-bottom: 1px solid #ccc;
+  box-shadow: inset 3px 0 0 transparent;
+  transition: box-shadow 0.2s ease;
+}
+
+.post-card:hover {
+  box-shadow: inset 3px 0 0 #b34c1e;
 }
 
 .post-card:first-child {
@@ -281,7 +307,7 @@ figcaption {
 }
 
 .post-card-title a:hover {
-  color: #3273dc;
+  color: #b34c1e;
 }
 
 .post-card-meta {
@@ -315,7 +341,7 @@ figcaption {
   }
 
   a {
-    color: #8cc2dd;
+    color: #e8916a;
   }
 
   code {
@@ -328,6 +354,8 @@ figcaption {
 
   blockquote {
     color: #ccc;
+    background: rgba(232, 145, 106, 0.08);
+    border-left-color: #e8916a;
   }
 
   textarea,
@@ -365,7 +393,7 @@ figcaption {
   }
 
   .post-card-title a:hover {
-    color: #8cc2dd;
+    color: #e8916a;
   }
 
   .post-card-meta {
