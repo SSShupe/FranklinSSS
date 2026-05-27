@@ -33,6 +33,7 @@ a {
 
 /* === HEADER PHOTO BACKGROUND — remove this block to revert === */
 header {
+  box-sizing: border-box;
   background-image: url('/assets/LRCorniche.jpg');
   background-size: cover;
   background-position: center;
