@@ -59,17 +59,11 @@ Plug in the list of blog posts as styled cards with cover image, excerpt, and re
 
         if npages > 1
             write(io, """<nav class="pagination">""")
-            # left slot: ← Newer (only when not on first page)
             if pg > 1
-                write(io, """<a class="pagination-link" href="#page-$(pg-1)">← Newer posts</a>""")
-            else
-                write(io, """<span class="pagination-placeholder"></span>""")
+                write(io, """<a class="pagination-newer" href="#page-$(pg-1)">← Later</a>""")
             end
-            # right slot: Older → (only when not on last page)
             if pg < npages
-                write(io, """<a class="pagination-link" href="#page-$(pg+1)">Older posts →</a>""")
-            else
-                write(io, """<span class="pagination-placeholder"></span>""")
+                write(io, """<a class="pagination-older" href="#page-$(pg+1)">Earlier →</a>""")
             end
             write(io, """</nav>""")
         end

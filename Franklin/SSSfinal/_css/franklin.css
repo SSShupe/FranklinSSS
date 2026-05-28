@@ -334,23 +334,24 @@ figcaption {
 
 .pagination {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 1.25rem 0 0.25rem;
 }
 
-.pagination-link {
+.pagination-newer,
+.pagination-older {
   color: #b34c1e;
   text-decoration: none;
   font-size: 0.9rem;
 }
 
-.pagination-link:hover {
+.pagination-newer:hover,
+.pagination-older:hover {
   text-decoration: underline;
 }
 
-.pagination-placeholder {
-  display: inline-block;
+.pagination-older {
+  margin-left: auto;
 }
 
 @media (prefers-color-scheme: dark) {
