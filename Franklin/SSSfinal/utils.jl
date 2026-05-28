@@ -13,37 +13,101 @@ Plug in the list of blog posts as styled cards with cover image, excerpt, and re
     filter!(f -> endswith(f, ".md") && !startswith(f, "index"), list)
     sort!(list, rev=true)  # YYYY-MM-DD filenames sort correctly in reverse
 
+    posts_per_page = 5
+    npost  = length(list)
+    npages = max(1, ceil(Int, npost / posts_per_page))
+
     io = IOBuffer()
-    write(io, """<div class="post-cards">""")
-    for post in list
-        ps = splitext(post)[1]
-        url = "/blog/$ps/"
-        surl = strip(url, '/')
+    write(io, """<div id="blog-paginator">""")
 
-        title = pagevar(surl, :title)
-        isnothing(title) && (title = ps)
+    for pg in 1:npages
+        chunk = list[(pg-1)*posts_per_page + 1 : min(pg*posts_per_page, npost)]
 
-        date_formatted = try
-            Dates.format(Date(ps[1:10], DateFormat("y-m-d")), "E U d, Y")
-        catch
-            ps[1:10]
+        write(io, """<div class="blog-page" id="page-$pg">""")
+        write(io, """<div class="post-cards">""")
+
+        for post in chunk
+            ps   = splitext(post)[1]
+            url  = "/blog/$ps/"
+            surl = strip(url, '/')
+
+            title = pagevar(surl, :title)
+            isnothing(title) && (title = ps)
+
+            date_formatted = try
+                Dates.format(Date(ps[1:10], DateFormat("y-m-d")), "E U d, Y")
+            catch
+                ps[1:10]
+            end
+
+            text      = extract_plain_text(joinpath("blog", post))
+            words     = split(text)
+            nwords    = length(words)
+            read_time = max(1, round(Int, nwords / 200))
+            excerpt   = join(words[1:min(40, nwords)], " ")
+            nwords > 40 && (excerpt *= "…")
+
+            write(io, """<article class="post-card">""")
+            write(io, """<div class="post-card-body">""")
+            write(io, """<h2 class="post-card-title"><a href="$url">$title</a></h2>""")
+            write(io, """<p class="post-card-meta">$date_formatted · $read_time min read</p>""")
+            write(io, """<p class="post-card-excerpt">$excerpt</p>""")
+            write(io, """</div></article>""")
         end
 
-        text = extract_plain_text(joinpath("blog", post))
-        words = split(text)
-        nwords = length(words)
-        read_time = max(1, round(Int, nwords / 200))
-        excerpt = join(words[1:min(40, nwords)], " ")
-        nwords > 40 && (excerpt *= "…")
+        write(io, """</div>""")  # .post-cards
 
-        write(io, """<article class="post-card">""")
-        write(io, """<div class="post-card-body">""")
-        write(io, """<h2 class="post-card-title"><a href="$url">$title</a></h2>""")
-        write(io, """<p class="post-card-meta">$date_formatted · $read_time min read</p>""")
-        write(io, """<p class="post-card-excerpt">$excerpt</p>""")
-        write(io, """</div></article>""")
+        if npages > 1
+            write(io, """<nav class="pagination">""")
+            # left slot: ← Newer (only when not on first page)
+            if pg > 1
+                write(io, """<a class="pagination-link" href="#page-$(pg-1)">← Newer posts</a>""")
+            else
+                write(io, """<span class="pagination-placeholder"></span>""")
+            end
+            # right slot: Older → (only when not on last page)
+            if pg < npages
+                write(io, """<a class="pagination-link" href="#page-$(pg+1)">Older posts →</a>""")
+            else
+                write(io, """<span class="pagination-placeholder"></span>""")
+            end
+            write(io, """</nav>""")
+        end
+
+        write(io, """</div>""")  # .blog-page
     end
-    write(io, "</div>")
+
+    write(io, """</div>""")  # #blog-paginator
+
+    write(io, """
+<script>
+(function () {
+  function showPage() {
+    var hash = window.location.hash;
+    var id   = (hash && hash.startsWith('#page-')) ? hash.slice(1) : 'page-1';
+    document.querySelectorAll('#blog-paginator .blog-page').forEach(function (p) {
+      p.style.display = 'none';
+    });
+    var target = document.getElementById(id);
+    if (target) target.style.display = 'block';
+  }
+
+  // Intercept pagination clicks so the browser doesn't jump to the anchor.
+  document.querySelectorAll('#blog-paginator .pagination-link').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      history.pushState(null, '', this.getAttribute('href'));
+      showPage();
+      document.getElementById('blog-paginator').scrollIntoView({ block: 'start' });
+    });
+  });
+
+  window.addEventListener('popstate', showPage);
+  showPage();
+}());
+</script>
+""")
+
     return String(take!(io))
 end
 

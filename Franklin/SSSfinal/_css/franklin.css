@@ -323,6 +323,36 @@ figcaption {
   line-height: 1.6;
 }
 
+/* pagination (blog index) */
+.blog-page {
+  display: none;
+}
+
+.blog-page:first-child {
+  display: block; /* no-JS fallback: show page 1 */
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 0 0.25rem;
+}
+
+.pagination-link {
+  color: #b34c1e;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.pagination-link:hover {
+  text-decoration: underline;
+}
+
+.pagination-placeholder {
+  display: inline-block;
+}
+
 @media (prefers-color-scheme: dark) {
   body {
     background-color: #333;
