@@ -1,6 +1,6 @@
 # SSSfinal — Claude session guide
 
-Franklin.jl static site for ssshupe.com. Goal: attractive, not-too-busy personal blog.
+Franklin.jl static site for alt.ssshupe.com. Goal: attractive, not-too-busy personal blog.
 Owner is learning site internals — always show actual code changes, not just descriptions.
 
 ## Key files
