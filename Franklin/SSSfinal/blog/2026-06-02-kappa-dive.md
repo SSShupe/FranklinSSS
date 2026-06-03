@@ -22,6 +22,4 @@ Additional (and more certain) confirmation will come from the results of the bon
 
 La Rochelle, here we come!
 
-~~~
-<a data-flickr-embed="true" href="https://www.flickr.com/photos/ssshupe/54805628589/in/datetaken-public/" title="La Rochelle 9-22-25-10"><img src="https://live.staticflickr.com/65535/54805628589_3f07ed1337_c.jpg" width="800" height="533" alt="La Rochelle 9-22-25-10"/></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
-~~~
+![](https://live.staticflickr.com/65535/54805628589_3f07ed1337_c.jpg)
