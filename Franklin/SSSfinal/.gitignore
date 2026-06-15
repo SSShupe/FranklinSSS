@@ -6,7 +6,9 @@ node_modules/
 .vscode/
 flickrapi.txt
 publish_to_wp.py
+publish_to_wp.jl
 setup_publication.py
+setup_publication.jl
 .wp_published
 SSH_MDP.txt
 wp_publish.py

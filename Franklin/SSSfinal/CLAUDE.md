@@ -14,9 +14,10 @@ Owner is learning site internals — always show actual code changes, not just d
 | `assets/` | Images and static files (e.g. `LRCorniche.jpg` = header photo) |
 | `blog/` | Blog post markdown files |
 | `utils.jl` | Franklin utility functions (e.g. `blogposts` hfun) |
-| `wp_publish.py` | Publishes new posts to WordPress as drafts |
-| `hooks/post-commit` | Git hook that calls `wp_publish.py` on new blog `.md` files |
-| `setup_wp_hook.sh` | Run once to install the git hook on a new machine |
+| `publish_to_wp.jl` | Publishes new posts to WordPress as drafts |
+| `setup_publication.jl` | One-time setup: creates the Standard.site/Bluesky publication record |
+| `hooks/post-commit` | Git hook that calls `publish_to_wp.jl` on new blog `.md` files |
+| `setup_wp_hook.jl` | Run once to install the git hook on a new machine |
 
 ## Layout structure
 
@@ -42,5 +43,4 @@ julia -e "using Franklin; serve()"
 
 ## Windows gotcha
 
-`python3` resolves to a broken Microsoft Store stub on this machine.
-The git hook uses `python` → `C:\Python314\python` instead. If Python issues recur, check that path.
+The git hook now calls `julia` directly. If Julia isn't on the PATH in Git Bash on Windows, add its install directory to the system PATH.

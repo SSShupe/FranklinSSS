@@ -14,21 +14,21 @@ Plug in the list of blog posts as styled cards with cover image, excerpt, and re
     sort!(list, rev=true)  # YYYY-MM-DD filenames sort correctly in reverse
 
     posts_per_page = 5
-    npost  = length(list)
+    npost = length(list)
     npages = max(1, ceil(Int, npost / posts_per_page))
 
     io = IOBuffer()
     write(io, """<div id="blog-paginator">""")
 
     for pg in 1:npages
-        chunk = list[(pg-1)*posts_per_page + 1 : min(pg*posts_per_page, npost)]
+        chunk = list[(pg-1)*posts_per_page+1:min(pg * posts_per_page, npost)]
 
         write(io, """<div class="blog-page" id="page-$pg">""")
         write(io, """<div class="post-cards">""")
 
         for post in chunk
-            ps   = splitext(post)[1]
-            url  = "/blog/$ps/"
+            ps = splitext(post)[1]
+            url = "/blog/$ps/"
             surl = strip(url, '/')
 
             title = pagevar(surl, :title)
@@ -40,11 +40,11 @@ Plug in the list of blog posts as styled cards with cover image, excerpt, and re
                 ps[1:10]
             end
 
-            text      = extract_plain_text(joinpath("blog", post))
-            words     = split(text)
-            nwords    = length(words)
+            text = extract_plain_text(joinpath("blog", post))
+            words = split(text)
+            nwords = length(words)
             read_time = max(1, round(Int, nwords / 200))
-            excerpt   = join(words[1:min(40, nwords)], " ")
+            excerpt = join(words[1:min(40, nwords)], " ")
             nwords > 40 && (excerpt *= "…")
 
             write(io, """<article class="post-card">""")
@@ -73,35 +73,38 @@ Plug in the list of blog posts as styled cards with cover image, excerpt, and re
 
     write(io, """</div>""")  # #blog-paginator
 
-    write(io, """
+    write(
+        io,
+        """
+
 <script>
 (function () {
-  function showPage() {
+function showPage() {
     var hash = window.location.hash;
     var id   = (hash && hash.startsWith('#page-')) ? hash.slice(1) : 'page-1';
     document.querySelectorAll('#blog-paginator .blog-page').forEach(function (p) {
-      p.style.display = 'none';
+    p.style.display = 'none';
     });
     var target = document.getElementById(id);
     if (target) target.style.display = 'block';
-  }
+}
 
-  // Intercept pagination clicks so the browser doesn't jump to the anchor.
-  document.querySelectorAll('#blog-paginator .pagination-link').forEach(function (a) {
+// Intercept pagination clicks so the browser doesn't jump to the anchor.
+document.querySelectorAll('#blog-paginator .pagination-link').forEach(function (a) {
     a.addEventListener('click', function (e) {
-      e.preventDefault();
-      history.pushState(null, '', this.getAttribute('href'));
-      showPage();
-      document.getElementById('blog-paginator').scrollIntoView({ block: 'start' });
+    e.preventDefault();
+    history.pushState(null, '', this.getAttribute('href'));
+    showPage();
+    document.getElementById('blog-paginator').scrollIntoView({ block: 'start' });
     });
-  });
+});
 
-  window.addEventListener('popstate', showPage);
-  showPage();
+window.addEventListener('popstate', showPage);
+showPage();
 }());
 </script>
-""")
-
+"""
+    )
     return String(take!(io))
 end
 
