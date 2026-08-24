@@ -26,6 +26,11 @@ h6 {
   font-family: 'Roboto';
 }
 
+p {
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+
 h2:not(.post-card-title) {
   padding-bottom: 0.0rem;
 }
@@ -33,7 +38,7 @@ h2:not(.post-card-title) {
 h2:not(.post-card-title)::after {
   content: '';
   display: block;
-  width: 50%;
+  width: 100%;
   height: 2px;
   background: #b34c1e;
   margin-top: 0.25rem;
@@ -55,7 +60,7 @@ header {
   background-size: cover;
   background-position: center;
   filter: contrast(1.15) saturate(1.15);
-  min-height: 220px;
+  min-height: 300px;
   padding: 2rem 1rem 1rem;
   width: 100vw;
   margin-top: -20px;
@@ -120,7 +125,7 @@ input {
 }
 
 content {
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 table {

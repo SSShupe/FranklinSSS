@@ -22,6 +22,6 @@ Not convinced? Well, try reading some of the posts (which you can see by clickin
 
 I've kept the [original site](https://ssshupe.com) where you can view blog posts prior to 2022. Click the link to go back in time.
 
-One of the downsides of a less complex blog system is the lack of an easy way to implement a comment system. I will post a link to any new post on my [original site](https://ssshupe.com), so if you have a burning desire to comment, you can do it there.
+One of the downsides of a less complex blog system is the lack of an easy way to implement a comment system. I will post a link to any new post on the original site, so if you have a burning desire to comment, you can do it there.
 
 I hope to add functionality to the site as I go along. In the meantime ... enjoy!

@@ -2,6 +2,7 @@ using Dates
 using HTTP
 using XMLDict
 using StatsBase
+using FranklinUtils
 
 """
     {{blogposts}}
@@ -21,7 +22,7 @@ Plug in the list of blog posts as styled cards with cover image, excerpt, and re
     write(io, """<div id="blog-paginator">""")
 
     for pg in 1:npages
-        chunk = list[(pg-1)*posts_per_page+1:min(pg * posts_per_page, npost)]
+        chunk = list[((pg-1)*posts_per_page+1):min(pg*posts_per_page, npost)]
 
         write(io, """<div class="blog-page" id="page-$pg">""")
         write(io, """<div class="post-cards">""")
@@ -186,5 +187,16 @@ function hfun_featuredimage()
     img_url = locvar(:featured_image)
     (isnothing(img_url) || isempty(img_url)) && return ""
     return """<figure class="featured-image"><img src="$img_url" alt=""></figure>"""
+end
+
+# to use: {{ add_bsky_comments data-bluesky-uri_of_your_post_in_quotes }}
+
+function hfun_add_bsky_comments(post_url::Vector{String})
+    post = post_url[1]
+    html = """
+    <script src="bsky-comments.js"></script>
+    <bsky-comments post=\"$(post)\"></bsky-comments>
+    """
+    return html
 end
 
