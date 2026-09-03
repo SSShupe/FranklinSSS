@@ -6,7 +6,7 @@ draft = false
 
 +++
 
-A random selection of 27 of the last 500 pictures from my [Flickr](https://flickr.com/ssshupe/photos) feed, updated each time you visit or reload the page.
+A random selection of 27 of the last 500 pictures from my [Flickr](https://flickr.com/ssshupe/photos) feed, updated each time you visit or reload the page. Click on any thumbnail for a larger view. Like what you see? Check out my [albums](https://flickr.com/ssshupe/albums).
 
 ~~~
 <style>
